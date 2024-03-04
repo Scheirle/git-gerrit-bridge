@@ -1,6 +1,6 @@
 # Git Gerrit Bridge
 
-[![PyPI - Version](https://img.shields.io/pypi/v/git-gerrit-bridge.svg)](https://pypi.org/project/git-gerrit-subcommand)
+[![PyPI - Version](https://img.shields.io/pypi/v/git-gerrit-bridge.svg)](https://pypi.org/project/git-gerrit-bridge)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/git-gerrit-bridge.svg)](https://pypi.org/project/git-gerrit-bridge)
 
 -----
