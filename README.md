@@ -29,8 +29,8 @@ The `git gerrit` script maps local changes to remote changes and can therefore h
 Let's look at an example usage.
 
 ## Usage
-* Create a new local branch `feature-123`, tracking the remote `origin/development` branch:<br>
-  `git gerrit new development feature-123`
+* Create a new local branch `topic-1`, tracking the remote `origin/development` branch:<br>
+  `git gerrit new development topic-1`
 * Do the implementation and commit:<br>
   `touch feature.txt`<br>
   `git add feature.txt`<br>
@@ -40,10 +40,36 @@ Let's look at an example usage.
   `git gerrit push`
 * Get an overview of your changes (remote and local):<br>
   `git gerrit status`<br>
-  [TODO add output]
+```
+┏━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━┳━━━━━━━━━━━━━━━━┳━━━━━━━━━━━━━━┓
+┃ Number  ┃ Subject                                       ┃   Status    ┃ Remote Branch  ┃ Local Branch ┃
+┡━━━━━━━━━╇━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━╇━━━━━━━━━━━━━━━━╇━━━━━━━━━━━━━━┩
+│ 1000001 │ 🌐 Change only available in gerrit            │ Only Remote │ development    │              │
+│ 1000003 │ 🌐 Change was edited or rebased in gerrit     │  Old Local  │ development    │ stale        │
+│ 1000004 │ 🌐 Change was amended locally                 │ Old Remote  │ development    │ active       │
+│ 1000009 │ 🌐 Added feature.txt                          │   In Sync   │ development    │ topic-1      │
+│ 1000005 │ 🌐 Local and remote change have the same hash │   In Sync   │ feature-1      │ chain        │
+│         │ ⚡ Local change not yet pushed to gerrit      │ Only Local  │ hot-fix        │ hacking      │
+│ 1000006 │ 🐞 Follow up for 1000005 as commit chain      │   In Sync   │ feature-1      │ chain        │
+│ 1000007 │ ❌ Change was merged in gerrit                │   Merged    │ development    │ bug123       │
+│ 1000008 │ ❌ Change was abandoned in gerrit             │  Abandoned  │ development    │ bug321       │
+└─────────┴───────────────────────────────────────────────┴─────────────┴────────────────┴──────────────┘
+ 🌐 Remote Change; ⚡ Local Change; 🐞 WIP Change; ❌ To be deleted; Click Number to open in browser
+```
+
 * Remove fully integrated branches:<br>
   `git gerrit clean`<br>
-  [TODO add output]
+```
+Cleaning 8 branches:
+branch_with_no_remote  ? Commits Skipped (no remote set)
+active                 1 Commits Skipped (Not yet merged)
+bug123                 1 Commits Deleted
+bug321                 1 Commits Deleted
+chain                  2 Commits Skipped (Not yet merged)
+hacking                1 Commits Skipped (Not yet pushed)
+stale                  1 Commits Skipped (Not yet merged)
+topic-1                1 Commits Skipped (Not yet merged)
+```
 
 Further commands are:
 * `git gerrit checkout <number> <branch>`<br>
