@@ -1,0 +1,41 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "git-gerrit-bridge"
+dynamic = ["version"]
+description = 'Git subcommand to ease local branch management with gerrit.'
+readme = "README.md"
+requires-python = ">=3.9"
+license = "GPL-3.0-or-later"
+keywords = ["git", "gerrit"]
+authors = [
+  { name = "Bernhard Scheirle", email = "bernhard@scheirle.de" },
+]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Software Development :: Version Control :: Git",
+]
+dependencies = [
+  "plumbum",
+  "rich",
+]
+
+[project.urls]
+Documentation = "https://github.com/unknown/git-gerrit#readme"
+Issues = "https://github.com/unknown/git-gerrit/issues"
+Source = "https://github.com/unknown/git-gerrit"
+
+[project.scripts]
+git-gerrit = "git_gerrit.cli:GitGerrit"
+
+[tool.hatch.version]
+path = "git_gerrit/__about__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["git_gerrit"]
