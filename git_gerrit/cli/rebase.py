@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 import plumbum.cli
-import rich
+import rich.console
 
 from git_gerrit.utils.branch import LocalBranch
 from git_gerrit.utils.git import git

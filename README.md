@@ -22,7 +22,7 @@ Feature branches have the downside that there will be many and to keep the overv
 they have to be cleaned up/deleted regularly.
 
 Git can do this for fully integrated branches with `git branch -d <branch>`.
-The issue with this is that often changes are purely modified in gerrit (rebase or online edits),
+The issue is that often changes are purely modified in gerrit (rebase or online edits),
 preventing git from detecting if a local branch is fully integrated or not (git hashes differ).
 
 The `git gerrit` script maps local changes to remote changes and can therefore handle such situations.<br>
