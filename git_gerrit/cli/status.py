@@ -11,6 +11,7 @@ from git_gerrit.utils.change import Change
 from git_gerrit.utils.remotechange import RemoteChange
 from git_gerrit.utils.branch import LocalBranch
 from git_gerrit.utils.gerrit import Gerrit
+from git_gerrit.utils.version import Version
 
 class Status(plumbum.cli.Application):
     '''Show status of remote and local changes'''
@@ -66,3 +67,4 @@ class Status(plumbum.cli.Application):
                 c.update.strftime("%Y-%m-%d %H:%M"),
                 remote.owner)
         console.print(table)
+        Version.print_version_check()
