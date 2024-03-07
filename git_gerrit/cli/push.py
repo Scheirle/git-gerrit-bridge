@@ -19,6 +19,9 @@ class Push(plumbum.cli.Application):
             self.options.append(o)
 
     def main(self):
-        b = LocalBranch.from_head()
+        b = LocalBranch.from_head() or LocalBranch.from_rebase()
+        if b is None:
+            print("Current branch not known, no branch checked out?")
+            return 1
         cmd = ["push", GitConfig.remote(), f"HEAD:refs/for/{b.remote_name}", "-o", f"hashtag=branch:{b.local_name}"] + self.options
         git[cmd].run_fg()

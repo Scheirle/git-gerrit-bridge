@@ -23,6 +23,9 @@ class Sync(plumbum.cli.Application):
     def main(self):
         console = rich.console.Console()
         b = LocalBranch.from_head()
+        if b is None:
+            print("Current branch not known, no branch checked out?")
+            return 1
         if not LocalBranch.is_head_clean():
             print(f"[magenta1]{b.local_name}[/] contains uncommited changes, aborting.")
             return 1

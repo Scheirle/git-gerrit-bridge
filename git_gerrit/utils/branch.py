@@ -1,6 +1,8 @@
 # SPDX-FileCopyrightText: 2024-present Bernhard Scheirle
 # SPDX-License-Identifier: GPL-3.0-or-later
 
+import pathlib
+
 from functools import cache
 from git_gerrit.utils.localchange import LocalChange
 from git_gerrit.utils.git import GitConfig, git
@@ -25,8 +27,18 @@ class LocalBranch:
     @classmethod
     def from_head(cls):
         """ Returns currently checked out branch. """
-        ref = git["symbolic-ref", "-q", "HEAD"]().strip()
-        return LocalBranch(ref)
+        rc, ref, _ = git["symbolic-ref", "-q", "HEAD"].run(retcode=None)
+        return LocalBranch(ref.strip()) if rc == 0 else None
+
+    @classmethod
+    def from_rebase(cls):
+        """ Returns the branch currently being rebased. """
+        for dir in ["rebase-merge", "rebase-apply"]:
+            path = git["rev-parse", "--git-path", f"{dir}/head-name"]().strip()
+            if pathlib.Path(path).exists():
+                ref = pathlib.Path(path).read_text().strip()
+                return LocalBranch(ref)
+        return None
 
     @staticmethod
     def is_head_clean():
