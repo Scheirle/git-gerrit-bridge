@@ -21,8 +21,9 @@ class LocalBranch:
             return []
         commit_hashes = git["log", "--first-parent", "--pretty=%H",
             f"{self.remote_ref}..{self.local_name}"]().splitlines()
-        return [LocalChange.from_hash(hash, self.local_name, self.remote_name)
-                for hash in commit_hashes]
+        changes = [LocalChange.from_hash(hash, self.local_name, self.remote_name)
+                   for hash in commit_hashes]
+        return [c for c in changes if c is not None]
 
     @classmethod
     def from_head(cls):

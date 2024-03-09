@@ -19,16 +19,19 @@ class LocalChange(ChangeBase):
         """ Returns the commit message, the change id and the timestamp of the commit. """
         change_id_prefix = "Change-Id: "
         out = git["log", "--format=%ct%n%B", "-n", 1, hash]().splitlines()
-        change_ids = [x for x in out if x.startswith(change_id_prefix)]
-        assert len(change_ids) != 0, f"Change {hash} has no change id"
         date = datetime.datetime.fromtimestamp(int(out[0]))
         subject = out[1]
-        change_id = change_ids[-1][len(change_id_prefix):]
+        change_id = ""
+        change_ids = [x for x in out if x.startswith(change_id_prefix)]
+        if len(change_ids) != 0:
+            change_id = change_ids[-1][len(change_id_prefix):]
         return (subject, change_id, date)
 
     @classmethod
     def from_hash(cls, hash: str, branch_local:str, branch_remote:str):
         subject, change_id, date = cls._get_commit_info(hash)
+        if change_id == "":
+            return None
         return cls(
             branch_local=branch_local,
             branch_remote=branch_remote,
