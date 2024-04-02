@@ -23,4 +23,4 @@ class Checkout(plumbum.cli.Application):
         git["fetch", GitConfig.remote(), change.gerrit_ref].run_fg()
         git["branch", name, "FETCH_HEAD"].run_fg() # create new branch
         git["branch", "--set-upstream-to", f"{GitConfig.remote()}/{change.branch_remote}", name].run_fg()
-        git["switch", name].run_fg()
+        git["switch", name].run_fg(retcode=None)

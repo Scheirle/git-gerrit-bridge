@@ -9,4 +9,4 @@ class New(plumbum.cli.Application):
     """ Creates a new branch tracking <upstream> with the name <name>."""
 
     def main(self, upstream, name):
-        git["checkout", "-b", name, f"{GitConfig.remote()}/{upstream}"].run_fg()
+        git["checkout", "-b", name, f"{GitConfig.remote()}/{upstream}"].run_fg(retcode=None)
