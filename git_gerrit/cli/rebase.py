@@ -21,4 +21,4 @@ class Rebase(plumbum.cli.Application):
             print("Nothing to rebase")
             return 0
         console.print(f"Starting interactive rebase of [magenta1]{b.local_name}[/] with {num_changes} Changes...")
-        git["rebase", "-i", f"HEAD~{num_changes}"].run_fg()
+        git["rebase", "-i", f"HEAD~{num_changes}"].run_fg(retcode=None)
