@@ -26,5 +26,5 @@ class Push(plumbum.cli.Application):
         if b.remote_name == "":
             print("Current branch has no remote, cannot push to gerrit")
             return 1
-        cmd = ["push", GitConfig.remote(), f"HEAD:refs/for/{b.remote_name}", "-o", f"hashtag=branch:{b.local_name}"] + self.options
+        cmd = ["push", b.remote, f"HEAD:refs/for/{b.remote_name}", "-o", f"hashtag=branch:{b.local_name}"] + self.options
         git[cmd].run_fg()

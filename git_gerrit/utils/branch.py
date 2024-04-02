@@ -11,7 +11,10 @@ class LocalBranch:
     def __init__(self, ref: str):
         self.local_name = git["rev-parse", "--abbrev-ref", ref]().strip()
         self.remote_ref = git["for-each-ref", "--format=%(upstream:short)", ref]().strip()
-        self.remote_name = self.remote_ref.replace(f"{GitConfig.remote()}/", "")
+        split = self.remote_ref.split("/")
+        assert len(split) > 0 and len(split) <= 2, f"Unexpected/supported remote name {self.remote_ref}"
+        self.remote = split[0]
+        self.remote_name = split[1] if len(split) > 1 else ""
 
     def has_remote(self):
         return self.remote_ref != ""
